@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -18,6 +19,13 @@ namespace CLIENTS_API
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string dataDirectoryPath = System.IO.Path.Combine(basePath, "users_db");
+            AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectoryPath);
+
+            GlobalConfiguration.Configuration.Formatters.Clear();
+            GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter()); // Cambio de XML a JSON
         }
     }
 }
